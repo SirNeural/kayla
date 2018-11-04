@@ -137,23 +137,28 @@ class Index extends React.Component {
                 </Typography>
               </Toolbar>
             </AppBar>
-          <Grid container spacing={24} style={{paddingTop: 0 + '%'}}>
+                    <Grid container spacing={24} style={{
+                        margin: '0',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)'}}>
 
             <Grid item xs>
               <TextField
-          id="outlined-multiline-flexible-1"
-          label="Speaker 1"
-          multiline
-          defaultValue=" "
-          rowsMax="24"
-          value={this.state.multiline1}
-          onChange={this.handleChange('multiline')}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          ref="speaker-1"
-          style={{width: 500}}
-        />
+                id="outlined-multiline-flexible-1"
+                label="Speaker 1"
+                multiline
+                defaultValue=" "
+                rowsMax="24"
+                value={this.state.multiline1}
+                onChange={this.handleChange('multiline')}
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                ref="speaker-1"
+                style = {{width: 500}}
+              />
               </Grid>
                 <Grid item xs>
               <Typography variant="h5" gutterBottom>
@@ -168,19 +173,19 @@ class Index extends React.Component {
               </Grid>
               <Grid item xs>
               <TextField
-          id="outlined-multiline-flexible-2"
-          label="Speaker 2"
-          multiline
-          defaultValue=" "
-          rowsMax="24"
-          value={this.state.multiline2}
-          onChange={this.handleChange('multiline')}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          ref="speaker-2"
-          style={{width: 500}}
-        />
+                id="outlined-multiline-flexible-2"
+                label="Speaker 2"
+                multiline
+                defaultValue=" "
+                rowsMax="24"
+                value={this.state.multiline2}
+                onChange={this.handleChange('multiline')}
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                ref="speaker-2"
+                style = {{width: 500}}
+              />
             </Grid>
           </Grid>
         </div>
