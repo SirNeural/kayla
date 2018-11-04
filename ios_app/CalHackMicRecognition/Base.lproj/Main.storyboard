@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CalHackMicRecognition" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUq-Kv-y3L">
+                                <rect key="frame" x="20.5" y="348.5" width="373" height="199"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Record1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sn1-j6-Pka">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJU-TV-fbh">
+                                        <rect key="frame" x="149.5" y="80" width="74" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="record:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eFi-ig-gZf"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Record2" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fLc-bj-hdF">
+                                        <rect key="frame" x="0.0" y="169" width="373" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AkT-Db-fZi">
+                                        <rect key="frame" x="176.5" y="50" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Sn1-j6-Pka" firstAttribute="width" secondItem="eUq-Kv-y3L" secondAttribute="width" id="93Q-Mt-KI6"/>
+                                    <constraint firstItem="Sn1-j6-Pka" firstAttribute="centerX" secondItem="eUq-Kv-y3L" secondAttribute="centerX" id="Gez-7e-zBU"/>
+                                    <constraint firstItem="oJU-TV-fbh" firstAttribute="centerX" secondItem="eUq-Kv-y3L" secondAttribute="centerX" id="NtC-td-Bcf"/>
+                                    <constraint firstItem="AkT-Db-fZi" firstAttribute="centerX" secondItem="eUq-Kv-y3L" secondAttribute="centerX" id="TaT-YR-7Iy"/>
+                                    <constraint firstItem="fLc-bj-hdF" firstAttribute="width" secondItem="eUq-Kv-y3L" secondAttribute="width" id="WSn-2D-21v"/>
+                                    <constraint firstItem="oJU-TV-fbh" firstAttribute="top" secondItem="AkT-Db-fZi" secondAttribute="bottom" constant="10" id="aJa-Ny-zsR"/>
+                                    <constraint firstItem="fLc-bj-hdF" firstAttribute="top" secondItem="oJU-TV-fbh" secondAttribute="bottom" constant="48" id="b2L-PE-RsD"/>
+                                    <constraint firstItem="fLc-bj-hdF" firstAttribute="centerX" secondItem="eUq-Kv-y3L" secondAttribute="centerX" id="kY7-er-0gp"/>
+                                    <constraint firstAttribute="bottom" secondItem="fLc-bj-hdF" secondAttribute="bottom" id="rFT-Dg-pYI"/>
+                                    <constraint firstItem="Sn1-j6-Pka" firstAttribute="top" secondItem="eUq-Kv-y3L" secondAttribute="top" id="rVz-ck-iGR"/>
+                                    <constraint firstItem="AkT-Db-fZi" firstAttribute="top" secondItem="Sn1-j6-Pka" secondAttribute="bottom" constant="20" id="uCu-up-2R5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eUq-Kv-y3L" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9" id="4AN-QY-gcc"/>
+                            <constraint firstItem="eUq-Kv-y3L" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fgF-sR-Uhv"/>
+                            <constraint firstItem="eUq-Kv-y3L" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="jR3-Hi-mlc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="myActivityIndicator" destination="AkT-Db-fZi" id="Kpg-EA-Tdy"/>
+                        <outlet property="record1TextField" destination="Sn1-j6-Pka" id="Lgr-LL-Tfg"/>
+                        <outlet property="record2TextField" destination="fLc-bj-hdF" id="MAb-1y-0XS"/>
+                        <outlet property="recordButton" destination="oJU-TV-fbh" id="dn5-SR-J3J"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-758" y="196"/>
+        </scene>
+    </scenes>
+</document>
