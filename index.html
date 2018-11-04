@@ -108,7 +108,7 @@ class Index extends React.Component {
             var formData = new FormData();
             formData.append('audio-blob', e);
 
-            makeXMLHttpRequest('https://f81f2384.ngrok.io/upload', formData, function(response) {
+            makeXMLHttpRequest('https://8f7559fe.ngrok.io/upload', formData, function(response) {
                 let data = JSON.parse(response)
                 this.setState({multiline1: data[0], multiline2: data[1]})
                 console.log(response)
