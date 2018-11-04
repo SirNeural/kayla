@@ -16,6 +16,7 @@
     <div id="root"></div>
     <script type="text/babel">
 const {
+  AppBar,
   Button,
   colors,
   createMuiTheme,
@@ -27,6 +28,7 @@ const {
   DialogTitle,
   Icon,
   MuiThemeProvider,
+  Toolbar,
   Typography,
   withStyles,
   Grid,
@@ -35,14 +37,10 @@ const {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: colors.purple[300],
-      main: "#5F4B8B",
-      dark: colors.purple[700],
+      main: "#673ab7",
     },
     secondary: {
-      light: colors.orange[300],
       main: "#F4AA46",
-      dark: colors.orange[700],
     },
   },
   typography: {
@@ -54,7 +52,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20,
+    color: 'white',
   },
   icon: {
     marginRight: theme.spacing.unit,
@@ -131,6 +129,14 @@ class Index extends React.Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <CssBaseline />
+            <AppBar position="static" color="primary">
+              <Toolbar>
+                <Typography variant="h5" style={{color: '#fff'}}>
+                  <Icon id="logo" onLoad={onLoad}>hearing</Icon>
+                  &nbsp;&nbsp;Kayla
+                </Typography>
+              </Toolbar>
+            </AppBar>
           <Grid container spacing={24} style={{paddingTop: 0 + '%'}}>
 
             <Grid item xs>
@@ -154,7 +160,7 @@ class Index extends React.Component {
                 Keyed-voice Analysis Yielding to Language Assistance
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
-                For CalHacks 5.0
+                Press below to begin
               </Typography>
               <Button variant="fab" color="primary" className={classes.button} onClick={this.toggleRecording.bind(this)}>
                 <Icon id="recordButton" onLoad={onLoad}>mic</Icon>
