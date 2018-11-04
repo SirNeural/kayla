@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>KAYLA</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
+    <script src="https://unpkg.com/react@latest/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@material-ui/core/umd/material-ui.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+const {
+  Button,
+  colors,
+  createMuiTheme,
+  CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Icon,
+  MuiThemeProvider,
+  Typography,
+  withStyles,
+  Grid,
+  TextField,
+} = window['material-ui'];
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: colors.purple[300],
+      main: "#5F4B8B",
+      dark: colors.purple[700],
+    },
+    secondary: {
+      light: colors.orange[300],
+      main: "#F4AA46",
+      dark: colors.orange[700],
+    },
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    textAlign: 'center',
+    paddingTop: theme.spacing.unit * 20,
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+});
+
+class Index extends React.Component {
+  constructor(props) {
+    super(props)
+    this.toggleRecording = this.toggleRecording.bind(this)
+  }
+  state = {
+    open: false,
+  };
+
+  handleClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleClick = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  toggleRecording() {
+      recordButton = document.getElementById('recordButton')
+      if (recorder && recordButton.innerHTML=="stop"){
+        recorder.stop();
+        gumStream.getAudioTracks()[0].stop();
+        recorder.exportWAV(recorder.ondataavailable);
+        recordButton.innerHTML = 'mic'
+      }else{
+        recordButton.innerHTML = 'stop'
+        navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
+          gumStream = stream;
+          // recorder = new MediaRecorder(stream);
+          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          var audioContext = new AudioContext; //new audio context to help us record
+          var input = audioContext.createMediaStreamSource(stream);
+          recorder = new Recorder(input,{numChannels:1})
+          recorder.ondataavailable = function(e){
+            // var file = new File([e.data], 'msr-' + (new Date).toISOString().replace(/:|\./g, '-') + '.webm', {
+            //     type: 'audio/webm'
+            // });
+            // create FormData
+            var formData = new FormData();
+            formData.append('audio-blob', e);
+
+            makeXMLHttpRequest('https://c7b7f5fb.ngrok.io/upload', formData, function(response) {
+                let data = JSON.parse(response)
+                this.setState({multiline1: data[0], multiline2: data[1]})
+                console.log(response)
+                console.log(data)
+            }.bind(this));
+          }.bind(this);
+          recorder.record();
+        }.bind(this));
+      }
+    }
+
+  render() {
+    const { classes } = this.props;
+    const { open } = this.state;
+    let input;
+
+    return (
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <Grid container spacing={24} style={{paddingTop: 0 + '%'}}>
+
+            <Grid item xs>
+              <TextField
+          id="outlined-multiline-flexible-1"
+          label="Speaker 1"
+          multiline
+          defaultValue=" "
+          rowsMax="24"
+          value={this.state.multiline1}
+          onChange={this.handleChange('multiline')}
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          ref="speaker-1"
+          style={{width: 500}}
+        />
+              </Grid>
+                <Grid item xs>
+              <Typography variant="h5" gutterBottom>
+                Keyed-voice Analysis Yielding to Language Assistance
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                For CalHacks 5.0
+              </Typography>
+              <Button variant="fab" color="primary" className={classes.button} onClick={this.toggleRecording.bind(this)}>
+                <Icon id="recordButton" onLoad={onLoad}>mic</Icon>
+                </Button>
+              </Grid>
+              <Grid item xs>
+              <TextField
+          id="outlined-multiline-flexible-2"
+          label="Speaker 2"
+          multiline
+          defaultValue=" "
+          rowsMax="24"
+          value={this.state.multiline2}
+          onChange={this.handleChange('multiline')}
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          ref="speaker-2"
+          style={{width: 500}}
+        />
+            </Grid>
+          </Grid>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
+
+const App = withStyles(styles)(Index);
+
+ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    <script>
+    var recorder, gumStream;
+    var recordButton;
+    function onLoad() {
+      recordButton = document.getElementById('recordButton');
+    }
+    function makeXMLHttpRequest(url, data, callback) {
+      var request = new XMLHttpRequest();
+      request.onreadystatechange = function() {
+          if (request.readyState == 4 && request.status == 200) {
+              callback(request.responseText);
+          }
+      };
+      request.open('POST', url);
+      request.send(data);
+    }
+    </script>
+  </body>
+</html>
