@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <title>KAYLA</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
-    <script src="https://unpkg.com/react@latest/umd/react.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/@material-ui/core/umd/material-ui.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="text/babel">
+
+<head>
+  <title>KAYLA</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
+  <script src="https://unpkg.com/react@16.9.0/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@16.9.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@material-ui/core@4.3.3/umd/material-ui.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.5.5/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
 const {
   AppBar,
-  Button,
+  Fab,
   colors,
   createMuiTheme,
   CssBaseline,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Icon,
   MuiThemeProvider,
   Toolbar,
@@ -33,7 +30,7 @@ const {
   withStyles,
   Grid,
   TextField,
-} = window['material-ui'];
+} = MaterialUI;
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -42,9 +39,6 @@ const theme = createMuiTheme({
     secondary: {
       main: "#F4AA46",
     },
-  },
-  typography: {
-    useNextVariants: true,
   },
 });
 
@@ -55,7 +49,7 @@ const styles = theme => ({
     color: 'white',
   },
   icon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
 });
 
@@ -79,11 +73,13 @@ class Index extends React.Component {
       open: true,
     });
   };
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
+
   toggleRecording() {
       recordButton = document.getElementById('recordButton')
       if (recorder && recordButton.innerHTML=="stop"){
@@ -93,38 +89,30 @@ class Index extends React.Component {
         recordButton.innerHTML = 'mic'
       }else{
         recordButton.innerHTML = 'stop'
-        navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
+        navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(stream => {
           gumStream = stream;
-          // recorder = new MediaRecorder(stream);
-          var AudioContext = window.AudioContext || window.webkitAudioContext;
-          var audioContext = new AudioContext; //new audio context to help us record
-          var input = audioContext.createMediaStreamSource(stream);
+          let AudioContext = window.AudioContext || window.webkitAudioContext;
+          let audioContext = new AudioContext;
+          let input = audioContext.createMediaStreamSource(stream);
           recorder = new Recorder(input,{numChannels:1})
-          recorder.ondataavailable = function(e){
-            // var file = new File([e.data], 'msr-' + (new Date).toISOString().replace(/:|\./g, '-') + '.webm', {
-            //     type: 'audio/webm'
-            // });
-            // create FormData
-            var formData = new FormData();
+          recorder.ondataavailable = e => {
+            let formData = new FormData();
             formData.append('audio-blob', e);
-
-            makeXMLHttpRequest('https://daf8bf8f.ngrok.io/upload', formData, function(response) {
+            makeXMLHttpRequest('https://daf8bf8f.ngrok.io/upload', formData, response => {
                 let data = JSON.parse(response)
                 this.setState({multiline1: data[0], multiline2: data[1]})
                 console.log(response)
                 console.log(data)
-            }.bind(this));
-          }.bind(this);
+            });
+          };
           recorder.record();
-        }.bind(this));
+        });
       }
     }
-
   render() {
     const { classes } = this.props;
     const { open } = this.state;
     let input;
-
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
@@ -133,17 +121,16 @@ class Index extends React.Component {
               <Toolbar>
                 <Typography variant="h5" style={{color: '#fff'}}>
                   <Icon id="logo" onLoad={onLoad}>hearing</Icon>
-                  &nbsp;&nbsp;Kayla
+                  &nbsp;&nbsp;KAYLA
                 </Typography>
               </Toolbar>
             </AppBar>
-                    <Grid container spacing={24} style={{
+                    <Grid container spacing={3} style={{
                         margin: '0',
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)'}}>
-
             <Grid item xs>
               <TextField
                 id="outlined-multiline-flexible-1"
@@ -161,15 +148,15 @@ class Index extends React.Component {
               />
               </Grid>
                 <Grid item xs>
-              <Typography variant="h4" gutterBottom>
-                Keyed-voice Analysis Yielding to Language Assistance
+              <Typography variant="h4" gutterBottom color="primary">
+                Keyed-voice Analysis Yielding Language Assistance
               </Typography>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" gutterBottom color="primary">
                 Press below to begin
               </Typography>
-              <Button variant="fab" color="primary" className={classes.button} onClick={this.toggleRecording.bind(this)}>
+              <Fab color="primary" className={classes.button} onClick={this.toggleRecording.bind(this)}>
                 <Icon id="recordButton" onLoad={onLoad}>mic</Icon>
-                </Button>
+                </Fab>
               </Grid>
               <Grid item xs>
               <TextField
@@ -193,27 +180,26 @@ class Index extends React.Component {
     );
   }
 }
-
 const App = withStyles(styles)(Index);
-
 ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-    <script>
-    var recorder, gumStream;
-    var recordButton;
-    function onLoad() {
+  <script>
+    let recorder, gumStream;
+    let recordButton;
+    const onLoad = () => {
       recordButton = document.getElementById('recordButton');
     }
-    function makeXMLHttpRequest(url, data, callback) {
-      var request = new XMLHttpRequest();
-      request.onreadystatechange = function() {
-          if (request.readyState == 4 && request.status == 200) {
-              callback(request.responseText);
-          }
+    const makeXMLHttpRequest = (url, data, callback) => {
+      let request = new XMLHttpRequest();
+      request.onreadystatechange = () => {
+        if (request.readyState == 4 && request.status == 200) {
+          callback(request.responseText);
+        }
       };
       request.open('POST', url);
       request.send(data);
     }
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
